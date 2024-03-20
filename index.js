@@ -4,19 +4,14 @@ let list = document.getElementById("myList");
 let newLi;
 
 document.getElementById("add").addEventListener("click", function (e) {
-  // console.log(input, "hello world");
-  // firstItem.innerHTML = input.value;
+  // On click, create a new list item
   newLi = document.createElement("li");
 
-  // and give it some content
   const newItem = document.createTextNode(input.value);
 
+  //Create a checkbox
   const completed = document.createElement("input");
   completed.type = "checkbox";
-
-  // add the text node to the newly created div
-
-  //Adding to each new List Item
 
   //Adding remove button to each item.
   const removeButton = document.createElement("button");
@@ -27,10 +22,24 @@ document.getElementById("add").addEventListener("click", function (e) {
 
   // Adding edit button to each item.
   const editButton = document.createElement("button");
-  editButton.textContent = "Edit todo";
+  editButton.textContent = "Edit";
   editButton.addEventListener("click", function (e) {
-    //Placeholder for Editing
+    newLi.contentEditable = true;
+    newLi.style.backgroundColor = "blue";
+    e.stopPropagation();
   });
+
+  // Adding a save button to each item.
+  const saveButton = document.createElement("button");
+  saveButton.textContent = "Save";
+  saveButton.addEventListener("click", function (e) {
+    newLi.contentEditable = false;
+    newLi.style.backgroundColor = "blanchedalmond";
+    e.stopPropagation();
+  });
+
+  newLi.appendChild(saveButton);
+  newLi.appendChild(editButton);
 
   newLi.appendChild(newItem);
   newLi.appendChild(completed);
