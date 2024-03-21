@@ -13,6 +13,17 @@ document.getElementById("add").addEventListener("click", function (e) {
   const completed = document.createElement("input");
   completed.type = "checkbox";
 
+  completed.addEventListener("change", function () {
+    if (this.checked === true) {
+      newLi.style.textDecoration = "line-through";
+    } else {
+      newLi.style.textDecoration = "none";
+    }
+  });
+  // if (completed.checked) {
+  //   console.log("hello world");
+  // }
+
   //Adding remove button to each item.
   const removeButton = document.createElement("button");
   removeButton.textContent = "Remove todo";
