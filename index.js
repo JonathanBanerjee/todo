@@ -14,11 +14,14 @@ document.getElementById("add").addEventListener("click", function (e) {
   completed.type = "checkbox";
 
   completed.addEventListener("change", function () {
-    if (this.checked === true) {
-      newLi.style.textDecoration = "line-through";
-    } else {
-      newLi.style.textDecoration = "none";
-    }
+    // if (this.checked === true) {
+    //   newLi.style.textDecoration = "line-through";
+    // } else {
+    //   newLi.style.textDecoration = "none";
+    // }
+    this.checked
+      ? (newLi.style.textDecoration = "line-through")
+      : (newLi.style.textDecoration = "none");
   });
   // if (completed.checked) {
   //   console.log("hello world");
