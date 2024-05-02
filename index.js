@@ -1,63 +1,60 @@
 let input = document.getElementById("userInput");
 let list = document.getElementById("myList");
 
-let newLi;
+// let newLi;
 
 document.getElementById("add").addEventListener("click", function (e) {
   // On click, create a new list item
-  newLi = document.createElement("li");
+  let newLi = document.createElement("li");
+  newLi.classList.add("listitems");
 
-  const newItem = document.createTextNode(input.value);
+  const newItem = document.createElement("p");
+  newItem.innerText = input.value;
+  newItem.classList.add("task");
 
   //Create a checkbox
   const completed = document.createElement("input");
   completed.type = "checkbox";
+  newItem.classList.add("completed");
 
   completed.addEventListener("change", function () {
-    // if (this.checked === true) {
-    //   newLi.style.textDecoration = "line-through";
-    // } else {
-    //   newLi.style.textDecoration = "none";
-    // }
     this.checked
-      ? (newLi.style.textDecoration = "line-through")
-      : (newLi.style.textDecoration = "none");
+      ? (newItem.style.textDecoration = "line-through")
+      : (newItem.style.textDecoration = "none");
   });
-  // if (completed.checked) {
-  //   console.log("hello world");
-  // }
 
   //Adding remove button to each item.
   const removeButton = document.createElement("button");
-  removeButton.textContent = "Remove todo";
+  removeButton.textContent = "Remove 🗑️";
   removeButton.addEventListener("click", function (e) {
     newLi.remove();
   });
 
   // Adding edit button to each item.
   const editButton = document.createElement("button");
-  editButton.textContent = "Edit";
+  editButton.textContent = "Edit 📝";
   editButton.addEventListener("click", function (e) {
-    newLi.contentEditable = true;
-    newLi.style.backgroundColor = "blue";
+    newItem.contentEditable = true;
+    newItem.style.backgroundColor = "blue";
     e.stopPropagation();
   });
 
   // Adding a save button to each item.
   const saveButton = document.createElement("button");
-  saveButton.textContent = "Save";
+  saveButton.textContent = "Save 🛟";
   saveButton.addEventListener("click", function (e) {
-    newLi.contentEditable = false;
-    newLi.style.backgroundColor = "blanchedalmond";
+    newItem.contentEditable = false;
+    newItem.style.backgroundColor = "#eaddcf";
     e.stopPropagation();
   });
 
   newLi.appendChild(saveButton);
   newLi.appendChild(editButton);
+  newLi.appendChild(removeButton);
+  newLi.appendChild(completed);
 
   newLi.appendChild(newItem);
-  newLi.appendChild(completed);
-  newLi.appendChild(removeButton);
+
   list.appendChild(newLi);
   e.preventDefault();
 });

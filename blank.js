@@ -82,9 +82,17 @@
 
 // Revise Array Methods
 
-const numbers = [
-  3, 5, 5, 8, 10, 15, 20, 25, 30, 35, 40, 40, 45, 50, 200, 120, 100, 190,
-];
+const numbers = [3, 5, 5, 8, 49, 30, 32, 23];
+const result = [];
+for (let i = 0; i < numbers.length; ) {
+  result[i + 0] = numbers[i + 2];
+  result[i + 1] = numbers[i + 3];
+  result[i + 2] = numbers[i + 0];
+  result[i + 3] = numbers[i + 1];
+  i += 4;
+}
+// console.log(result);
+
 const fruits = [
   "apple",
   "banana",
@@ -92,8 +100,10 @@ const fruits = [
   "date",
   "elderberry",
   "STRAWBERRIES",
+  "Bananas",
+  "Raspberries",
 ];
-const negatives = [-2, -4, -6, -8, -10, -12, -14, -16, -18, -20, 20, 12];
+
 const languages = ["JavaScript", "Python", "Java", "C++", "Ruby"];
 const rounders = [0.4, 0.34, 0.594, 40.34, 50, 4, 3.2, 30.23];
 
@@ -134,9 +144,9 @@ const upperFruits = fruits.map((fruit) => {
 // });
 // console.log(multiNumbers); //Incorrect
 
-// const sum = numbers.reduce((accumulator, currentValue) => {
-//   return accumulator + currentValue;
-// }, 0);
+const sum = numbers.reduce((accumulator, currentValue) => {
+  return accumulator + currentValue;
+}, 0);
 
 // console.log(sum);
 
@@ -166,9 +176,9 @@ function sortFruits(a, b) {
 // console.log(alphaFruits);
 
 // 11. What is the result of finding the index of the first negative number in the array?
-const foundNegative = negatives.findIndex((number) => {
-  return number < 0;
-});
+// const foundNegative = negatives.findIndex((number) => {
+//   return number < 0;
+// });
 
 // console.log(foundNegative);
 
@@ -261,13 +271,13 @@ const filterDuplicates = numbers.filter((number, index) => {
 // console.log(filterDuplicates);
 
 // 25. What is the sum of all positive elements in the array?
-const positiveNumbers = negatives.reduce((accumulator, currentValue) => {
-  if (currentValue >= 0) {
-    return accumulator + currentValue;
-  } else {
-    return accumulator;
-  }
-}, 0);
+// const positiveNumbers = negatives.reduce((accumulator, currentValue) => {
+//   if (currentValue >= 0) {
+//     return accumulator + currentValue;
+//   } else {
+//     return accumulator;
+//   }
+// }, 0);
 
 // console.log(positiveNumbers);
 
@@ -286,7 +296,7 @@ const dividedIndices = numbers.map((number, index) => {
 const noGreaterFifty = numbers.filter((number) => {
   return number < 50;
 });
-console.log(noGreaterFifty);
+// console.log(noGreaterFifty);
 
 // 28. Can you generate a new array with elements converted to lowercase?
 const lowerFruits = fruits.map((fruit) => {
@@ -302,26 +312,199 @@ const berry = fruits.map((fruit) => {
 // console.log(berry);
 
 // 30. What is the result of filtering out all elements divisible by 3?
+const filterThree = numbers.filter((number) => {
+  if (number % 3 === 0) {
+    return number;
+  }
+});
+
+// console.log(filterThree);
 
 // 31. What would be the output after finding the index of the last occurrence of an even number?
+// const lastIndexEven = numbers.lastIndexOf((num) => num % 2 === 0);
+
+// Incorrect, use this method:
+
+const lastIndexEven = numbers.reduce((acc, num, index) => {
+  if (num % 2 === 0) {
+    return index;
+  }
+  return acc;
+}, -1);
+
+// console.log(lastIndexEven);
+
 // 33. Can you produce an array with elements squared and then halved?
+const squaredAndHalved = numbers.map((number) => {
+  return number ** 2 / 2;
+});
+
+// console.log(squaredAndHalved);
+
 // 34. How do you get an array with elements filtered to include only those ending with the letter 's'?
+const superS = fruits.filter((fruit) => fruit.includes("s"));
+// console.log(superS);
+
 // 35. What is the sum of all elements at odd indices in the array?
+
+const sumOdd = numbers.reduce((accumulator, currentValue, currentIndex) => {
+  if (currentIndex % 2 !== 0) {
+    return accumulator + currentValue;
+  } else {
+    return currentValue;
+  }
+});
+
+// console.log(sumOdd);
+
 // 36. Could you create an array with elements multiplied by 2 and then added by 5?
+const fiveMultiTwo = numbers.map((number) => {
+  return number * 2 + 5;
+});
+// console.log(fiveMultiTwo);
+
+// This can also be written as:
+const fiveMultiTwoTwo = numbers.map((number) => number * 2 + 5);
+// console.log(fiveMultiTwoTwo);
+
 // 37. What would be the output after removing all elements less than 15?
+const lessThanFifteen = numbers.filter((number) => {
+  return number < 15;
+});
+// console.log(lessThanFifteen);
+
+const lessThanFifteenTwo = numbers.filter((number) => number < 15);
+// console.log(lessThanFifteenTwo);
+
 // 38. Can you generate a new array with elements reversed in groups of two?
+// Question marked as difficult and for review.
+
 // 39. How can you obtain a new array with elements multiplied by their previous element?
+const previousMulti = numbers.map((number, index) => {
+  if (index === 0) {
+    return number;
+  } else {
+    return number * numbers[index - 1];
+  }
+});
+// console.log(previousMulti);
+
 // 40. What is the result of filtering out all elements greater than the average of the array?
+const numbersTwo = [2, 3, 4, 5, 6, 4, 7];
+numbersTwo.sort((a, b) => {
+  if (a > b) {
+    return -1;
+  }
+  if (a < b) {
+    return 1;
+  }
+  return 0;
+});
+// console.log(numbersTwo[Math.round(numbersTwo.length / 2)]);
+
+const resultAverage = numbersTwo.reduce((accumulator, currentValue) => {
+  return accumulator + currentValue;
+});
+// console.log(resultAverage / numbersTwo.length);
+
+// const average =
+//   numbers.reduce((accumulator, value) => accumulator, value, 0) /
+//   numbers.length;
+
+// const averageFilter = numbers.filter((number) => number <= average);
+// console.log(averageFilter);
+
 // 41. What would be the output after finding the index of the first occurrence of a prime number?
+function isPrime(number) {
+  if (number < 2) {
+    return false;
+  }
+
+  for (let i = 2; i <= Math.sqrt(number); i++) {
+    if (number % i === 0) {
+      return false;
+    }
+  }
+
+  return true;
+}
+
+const firstPrimeIndex = numbers.findIndex(isPrime);
+// console.log(firstPrimeIndex);
+
 // 42. Could you create an array with elements squared and then multiplied by 2?
+const squaredTwo = numbers.map((number) => {
+  return number ** 2 * 2;
+});
+// console.log(squaredTwo);
+
 // 43. How do you get an array with elements filtered to include only those with a length greater than 5?
+const filteredLengthFive = fruits.filter((fruit) => {
+  if (fruit.length > 5) {
+    return fruit;
+  }
+});
+// console.log(filteredLengthFive);
+
 // 44. What is the sum of all elements at even indices in the array?
+const sumEvenIndices = numbers.reduce(
+  (accumulator, currentValue, currentIndex) => {
+    if (currentIndex % 2 == 0) {
+      return accumulator + currentValue;
+    } else {
+      return currentValue;
+    }
+  }
+);
+// console.log(sumEvenIndices);
+
 // 45. Can you produce an array with elements concatenated with their indices and then sorted alphabetically?
+const indexSortAlpha = fruits
+  .map((fruit, index) => {
+    return fruit + index;
+  })
+  .sort();
+// console.log(indexSortAlpha);
+
 // 46. What would be the output after removing all elements containing the letter 'a'?
+const fruitsContainsA = fruits.filter((fruit) => {
+  return fruit.toLocaleLowerCase().includes("a");
+});
+
+// console.log(fruitsContainsA);
+
 // 47. How can you obtain a new array with elements rounded to two decimal places?
+const twoDecimals = rounders.map((number) => {
+  // return Math.round(number).toFixed(2);
+
+  //Making sure you get the numbers back as the correct data type:
+  return Number(Math.round(number).toFixed(2));
+});
+// console.log(twoDecimals);
+
 // 48. What is the result of filtering out all elements less than the median of the array?
+
 // 49. Could you create an array with elements converted to binary representation?
+function dec2bin(dec) {
+  return (dec >>> 0).toString(2);
+}
+
+const binary = numbers.map((number) => {
+  return dec2bin(number);
+});
+// console.log(binary);
+
+const negatives = [-2, -4, -6, -8, -10, -12, -14, -16, -18, -20, 20, 12];
 // 50. What would be the output after finding the index of the last occurrence of a negative number?
+// const lastIndexNegative = negatives.lastIndexOf(-1);
+// console.log(lastIndexNegative);
+// for (let i = negatives.length; i > -1; i--) {
+//   // console.log(i);
+//   if (negatives[i] < 0) {
+//     console.log(negatives[i], i);
+//     break;
+//   }
+// }
 // 51. Can you generate a new array with elements reversed and then multiplied by 3?
 // 52. How do you get an array with elements filtered to include only those divisible by both 2 and 3?
 // 53. What is the sum of all elements greater than their preceding element?
@@ -373,3 +556,51 @@ const berry = fruits.map((fruit) => {
 // 99. Could you create an array with elements converted to their corresponding Morse code timing?
 // 100. What would be the output after finding the index of the first occurrence of a perfect square followed by a prime number?
 // 101. Can you generate a new array with elements rotated to the left by four positions101 .Ca
+
+// input: An array of arrays of words and definitions
+// output: Build a tree that would be used as a dictionary.
+// If given this:
+
+// 	[‘and’,‘AND_DEFINITION’]
+// ]
+// The resulting tree should be
+// [{
+// 	letter: ‘a’
+// 	definition: null,
+// 	children: [{
+// 		letter: ‘n’,
+// 		definition: null,
+// 		children: [{
+// 			letter: d,
+// 			definition: ‘AND_DEFINITION’
+// 		}]
+// 	}]
+// }]
+
+const items = [
+  "oranges",
+  "Orange and round",
+  "apples",
+  "Green and round",
+  "bananas",
+  "Yellow and long",
+  "cherries",
+  "Red and round",
+];
+
+const newitems = items.filter((item, index) => {
+  if (index % 2 == 0) {
+    return item;
+  }
+});
+
+// console.log(newitems);
+
+const splitItems = newitems.map((item) => {
+  return item.split("");
+});
+
+// console.log(splitItems);
+
+// console.log(reducedItems);
+// myResult = [];
