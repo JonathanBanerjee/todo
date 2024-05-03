@@ -3,16 +3,35 @@
   background-color: #716040;
 } */
 
+body {
+  background: url(./images/todo.jpg);
+  background-size: cover;
+}
+
 .task {
+  display: flex;
   text-decoration: none;
-  background-color: #eaddcf;
+  background-color: #fffcf2;
+  width: 40%;
+  height: 70%;
+  margin: 0 auto;
+  /* flex-direction: row; */
+  /* justify-content: center;
+} */
 }
 
 ul {
   list-style-type: none;
 }
 
+.button-container {
+  display: flex;
+  justify-content: flex-start;
+  margin: 0 12%;
+}
+
 button {
+  /* margin: 0 auto; */
   align-self: center;
   background-color: #fff;
   background-image: none;
