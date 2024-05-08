@@ -2,19 +2,34 @@
   border-radius: 25%;
   background-color: #716040;
 } */
+.label-wrapper {
+  display: flex;
+  justify-content: center;
+  font-family: "Lobster", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 2rem;
+}
 
 body {
   background: url(./images/todo.jpg);
   background-size: cover;
 }
 
+input {
+  display: inline-block;
+  width: 40%;
+  margin: 5% 0px auto 14%;
+  background-color: gainsboro;
+}
+
 .task {
   display: flex;
   text-decoration: none;
-  background-color: #fffcf2;
+  /* background-color: #fffcf2; */
   width: 40%;
-  height: 70%;
-  margin: 0 auto;
+  height: 90%;
+  margin: 20px 10px 10%;
   /* flex-direction: row; */
   /* justify-content: center;
 } */
@@ -60,6 +75,10 @@ button {
   user-select: none;
   -webkit-user-select: none;
   touch-action: manipulation;
+  width: 100%;
+  height: 100%;
+  max-width: 130px;
+  max-height: 45px;
 }
 
 button:hover {

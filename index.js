@@ -1,10 +1,13 @@
-let input = document.getElementById("userInput");
+let input = document.getElementById("userInput").focus();
 let list = document.getElementById("myList");
 
 // let newLi;
 
 document.getElementById("add").addEventListener("click", function (e) {
   // On click, create a new list item
+  let input = document.getElementById("userInput");
+  input.focus();
+
   let newLi = document.createElement("li");
   newLi.classList.add("listitems");
 
@@ -35,8 +38,9 @@ document.getElementById("add").addEventListener("click", function (e) {
   editButton.textContent = "Edit 📝";
   editButton.addEventListener("click", function (e) {
     newItem.contentEditable = true;
-    newItem.style.backgroundColor = "#ccc5b9";
-    newItem.style.color = "white";
+    newItem.style.backgroundColor = "gainsboro";
+    newItem.style.color = "black";
+    newItem.focus();
     e.stopPropagation();
   });
 
@@ -45,19 +49,18 @@ document.getElementById("add").addEventListener("click", function (e) {
   saveButton.textContent = "Save 🛟";
   saveButton.addEventListener("click", function (e) {
     newItem.contentEditable = false;
-    newItem.style.backgroundColor = "#eaddcf";
-    newItem.style.color = "black";
+    newItem.style.backgroundColor = "";
     e.stopPropagation();
   });
 
   const buttonContainer = document.createElement("div");
   buttonContainer.classList.add("button-container");
 
+  buttonContainer.appendChild(newItem);
   buttonContainer.appendChild(saveButton);
   buttonContainer.appendChild(editButton);
   buttonContainer.appendChild(removeButton);
   buttonContainer.appendChild(completed);
-  buttonContainer.appendChild(newItem);
 
   newLi.appendChild(buttonContainer);
 
