@@ -1,3 +1,12 @@
+* {
+  font-family: "Lobster", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
 .label-wrapper {
   display: flex;
   justify-content: center;
@@ -8,8 +17,7 @@
 }
 
 body {
-  background: url(./images/todo.jpg);
-  background-size: cover;
+  background-color: grey;
 }
 
 input {
@@ -19,8 +27,9 @@ input {
   background-color: gainsboro;
 }
 
-input[type="checkbox" i] {
-  background-color: green;
+input[type="checkbox"] {
+  display: flex;
+  align-items: center;
 }
 
 .task {
@@ -43,6 +52,8 @@ ul {
   display: flex;
   justify-content: flex-start;
   margin: 10px 10%;
+  background: url(./images/todo.jpg);
+  background-size: cover;
 }
 
 button {
