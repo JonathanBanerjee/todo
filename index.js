@@ -1,12 +1,11 @@
-let input = document.getElementById("userInput").focus();
+let input = document.getElementById("userInput");
+input.focus();
 let list = document.getElementById("myList");
 
 // let newLi;
 
 document.getElementById("add").addEventListener("click", function (e) {
   // On click, create a new list item
-  let input = document.getElementById("userInput");
-  input.focus();
 
   let newLi = document.createElement("li");
   newLi.classList.add("listitems");
