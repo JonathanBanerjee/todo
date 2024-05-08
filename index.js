@@ -14,6 +14,9 @@ document.getElementById("add").addEventListener("click", function (e) {
   newItem.innerText = input.value;
   newItem.classList.add("task");
 
+  input.value = "";
+  input.focus();
+
   //Create a checkbox
   const completed = document.createElement("input");
   completed.type = "checkbox";
