@@ -2,8 +2,6 @@ let input = document.getElementById("userInput");
 input.focus();
 let list = document.getElementById("myList");
 
-// let newLi;
-
 document.getElementById("add").addEventListener("click", function (e) {
   // On click, create a new list item
 
@@ -65,8 +63,6 @@ document.getElementById("add").addEventListener("click", function (e) {
   buttonContainer.appendChild(completed);
 
   newLi.appendChild(buttonContainer);
-
-  // newLi.appendChild(newItem);
 
   list.appendChild(newLi);
   e.preventDefault();
