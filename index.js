@@ -2,38 +2,55 @@ let input = document.getElementById("userInput");
 input.focus();
 let list = document.getElementById("myList");
 
-document.getElementById("add").addEventListener("click", function (e) {
-  // On click, create a new list item
+let itemsArray = localStorage.getItem("listitems")
+  ? JSON.parse(localStorage.getItem("listitems"))
+  : [];
+
+// Save list to localStorage
+function saveList() {
+  localStorage.setItem("listitems", JSON.stringify(itemsArray));
+}
+
+// Add item to the list
+function addItem(text, completed = false) {
+  if (text.trim() === "") {
+    alert("Please enter a todo");
+    return;
+  }
 
   let newLi = document.createElement("li");
   newLi.classList.add("listitems");
 
   const newItem = document.createElement("p");
-  newItem.innerText = input.value;
+  newItem.innerText = text;
   newItem.classList.add("task");
 
   input.value = "";
   input.focus();
 
-  //Create a checkbox
-  const completed = document.createElement("input");
-  completed.type = "checkbox";
-  newItem.classList.add("completed");
+  const checkbox = document.createElement("input");
+  checkbox.type = "checkbox";
+  checkbox.checked = completed;
 
-  completed.addEventListener("change", function () {
+  checkbox.addEventListener("change", function () {
     this.checked
       ? (newItem.style.textDecoration = "line-through")
       : (newItem.style.textDecoration = "none");
+    saveList();
   });
 
-  //Adding remove button to each item.
+  if (completed) {
+    newItem.style.textDecoration = "line-through";
+  }
+
   const removeButton = document.createElement("button");
   removeButton.textContent = "Remove 🗑️";
-  removeButton.addEventListener("click", function (e) {
+  removeButton.addEventListener("click", function () {
     newLi.remove();
+    itemsArray = itemsArray.filter((item) => item.text !== text);
+    saveList();
   });
 
-  // Adding edit button to each item.
   const editButton = document.createElement("button");
   editButton.textContent = "Edit 📝";
   editButton.addEventListener("click", function (e) {
@@ -44,12 +61,17 @@ document.getElementById("add").addEventListener("click", function (e) {
     e.stopPropagation();
   });
 
-  // Adding a save button to each item.
   const saveButton = document.createElement("button");
   saveButton.textContent = "Save 🛟";
   saveButton.addEventListener("click", function (e) {
     newItem.contentEditable = false;
     newItem.style.backgroundColor = "";
+    itemsArray = itemsArray.map((item) =>
+      item.text === text
+        ? { text: newItem.innerText, completed: checkbox.checked }
+        : item
+    );
+    saveList();
     e.stopPropagation();
   });
 
@@ -60,10 +82,23 @@ document.getElementById("add").addEventListener("click", function (e) {
   buttonContainer.appendChild(saveButton);
   buttonContainer.appendChild(editButton);
   buttonContainer.appendChild(removeButton);
-  buttonContainer.appendChild(completed);
+  buttonContainer.appendChild(checkbox);
 
   newLi.appendChild(buttonContainer);
-
   list.appendChild(newLi);
+
+  itemsArray.push({ text, completed });
+  saveList();
+}
+
+// Load items from localStorage
+function loadList() {
+  itemsArray.forEach((item) => addItem(item.text, item.completed));
+}
+
+document.getElementById("add").addEventListener("click", function (e) {
+  addItem(input.value);
   e.preventDefault();
 });
+
+loadList();
