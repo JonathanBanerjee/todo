@@ -2,6 +2,7 @@ let input = document.getElementById("userInput");
 input.focus();
 let list = document.getElementById("myList");
 
+// Add a task
 document.getElementById("add").addEventListener("click", function (e) {
   // On click, create a new list item
 
