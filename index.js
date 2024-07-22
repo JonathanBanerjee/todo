@@ -1,11 +1,29 @@
+// let tasksArray = localStorage.getItem("tasks")
+//   ? JSON.parse(localStorage.getItem("tasks"))
+//   : [];
+
 let input = document.getElementById("userInput");
 input.focus();
 let list = document.getElementById("myList");
 
 // Add a task
 document.getElementById("add").addEventListener("click", function (e) {
-  // On click, create a new list item
+  e.preventDefault();
+  // Reading what is in local storage
+  const tasks = localStorage.getItem("tasks");
+  console.log(tasks);
+  if (!tasks) {
+    let firstItem = [];
+    const newArray = firstItem.push(input.value);
+    localStorage.setItem("tasks", newArray);
+    console.log(input.value);
+  } else {
+    [...tasks].push(input.value);
+    localStorage.setItem("tasks", tasks);
+  }
 
+  console.log("Code was running");
+  // On click, create a new list item
   let newLi = document.createElement("li");
   newLi.classList.add("listitems");
 
@@ -32,6 +50,7 @@ document.getElementById("add").addEventListener("click", function (e) {
   removeButton.textContent = "Remove 🗑️";
   removeButton.addEventListener("click", function (e) {
     newLi.remove();
+    localStorage.removeItem();
   });
 
   // Adding edit button to each item.
