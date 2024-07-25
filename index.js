@@ -1,88 +1,80 @@
-let tasksArray = localStorage.getItem("tasks")
-  ? JSON.parse(localStorage.getItem("tasks"))
-  : [];
+let tasksArray = JSON.parse(localStorage.getItem("tasks")) || [];
 
-console.log(tasksArray);
 let input = document.getElementById("userInput");
 input.focus();
 let list = document.getElementById("myList");
 
 renderList();
+
 // Add a task
 document.getElementById("add").addEventListener("click", function (e) {
   e.preventDefault();
-  // Reading what is in local storage
-  // const tasks = JSON.parse(localStorage.getItem("tasks"));
-  // console.log(tasks);
-  if (!tasksArray) {
-    let firstItem = [];
-    firstItem.push({ task: input.value, completed: false });
-    console.log(firstItem);
-    localStorage.setItem("tasks", JSON.stringify(firstItem));
-  } else {
+
+  if (input.value.trim() !== "") {
     tasksArray.push({ task: input.value, completed: false });
     localStorage.setItem("tasks", JSON.stringify(tasksArray));
+    renderList();
+    input.value = "";
+    input.focus();
   }
-  // tasksArray.push(input.value);
-  renderList();
-  input.value = "";
-  input.focus();
-
-  // On click, create a new list item
-  e.preventDefault();
 });
 
 function renderList() {
-  const outputArray = tasksArray.forEach((e) => renderItem(e));
-
-  // const joinedArray = outputArray.join("");
-  // list.innerHTML = joinedArray;
+  list.innerHTML = "";
+  tasksArray.forEach((task, index) => {
+    list.appendChild(renderItem(task, index));
+  });
 }
 
-function renderItem(input) {
+function renderItem(task, index) {
   let newLi = document.createElement("li");
   newLi.classList.add("listitems");
-  const newItem = document.createElement("p");
-  newItem.innerText = input.task;
-  newItem.classList.add("task");
 
-  //Create a checkbox
+  const newItem = document.createElement("p");
+  newItem.innerText = task.task;
+  newItem.classList.add("task");
+  if (task.completed) {
+    newItem.classList.add("completed");
+    newItem.style.textDecoration = "line-through";
+  }
+
   const completed = document.createElement("input");
   completed.type = "checkbox";
-  newItem.classList.add("completed");
+  completed.checked = task.completed;
 
   completed.addEventListener("change", function () {
+    tasksArray[index].completed = this.checked;
+    localStorage.setItem("tasks", JSON.stringify(tasksArray));
+    newItem.classList.toggle("completed", this.checked);
     this.checked
       ? (newItem.style.textDecoration = "line-through")
       : (newItem.style.textDecoration = "none");
   });
 
-  //Adding remove button to each item.
   const removeButton = document.createElement("button");
   removeButton.textContent = "Remove 🗑️";
-  removeButton.addEventListener("click", function (e) {
-    newLi.remove();
-    localStorage.removeItem();
+  removeButton.addEventListener("click", function () {
+    tasksArray.splice(index, 1);
+    localStorage.setItem("tasks", JSON.stringify(tasksArray));
+    renderList();
   });
 
-  // Adding edit button to each item.
   const editButton = document.createElement("button");
   editButton.textContent = "Edit 📝";
-  editButton.addEventListener("click", function (e) {
+  editButton.addEventListener("click", function () {
     newItem.contentEditable = true;
     newItem.style.backgroundColor = "gainsboro";
     newItem.style.color = "black";
     newItem.focus();
-    e.stopPropagation();
   });
 
-  // Adding a save button to each item.
   const saveButton = document.createElement("button");
   saveButton.textContent = "Save 🛟";
-  saveButton.addEventListener("click", function (e) {
+  saveButton.addEventListener("click", function () {
     newItem.contentEditable = false;
     newItem.style.backgroundColor = "";
-    e.stopPropagation();
+    tasksArray[index].task = newItem.innerText;
+    localStorage.setItem("tasks", JSON.stringify(tasksArray));
   });
 
   const buttonContainer = document.createElement("div");
@@ -96,5 +88,5 @@ function renderItem(input) {
 
   newLi.appendChild(buttonContainer);
 
-  list.appendChild(newLi);
+  return newLi;
 }
