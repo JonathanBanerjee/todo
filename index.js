@@ -17,13 +17,12 @@ addEventListener("keyup", () => {
   const task = { task: input.value.trim(), completed: false };
   const { error } = schema.validate(task);
   if (error) {
-    if (input.value.length < 3) {
+    if (input.value.length < 3 && input.value !== "") {
       errormessage.innerHTML = "Error - You must use over 3 characters";
     } else if (input.value.length > 100) {
       errormessage.innerHTML = "Error - Character Limit exceeded";
     } else errormessage.innerHTML = "Error - Invalid character detected";
   }
-
   console.log("keypress", input.value);
 });
 
@@ -35,8 +34,11 @@ document.getElementById("add").addEventListener("click", function (e) {
   const { error } = schema.validate(task);
 
   if (error) {
-    alert(error.details[0].message);
-    return;
+    if (input.value.length < 3) {
+      alert("Error - You must use over 3 characters");
+    } else if (input.value.length > 100) {
+      alert("Error - Character Limit exceeded");
+    } else alert("Error - Invalid character detected");
   }
 
   if (input.value.trim() !== "") {
