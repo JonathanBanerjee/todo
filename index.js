@@ -1,17 +1,46 @@
+const schema = Joi.object({
+  task: Joi.string().regex(new RegExp("^[a-zA-Z0-9 .,?!]{3,100}$")),
+  completed: Joi.boolean(),
+});
+
 let tasksArray = JSON.parse(localStorage.getItem("tasks")) || [];
 
 let input = document.getElementById("userInput");
 input.focus();
 let list = document.getElementById("myList");
 
+const errormessage = document.getElementById("error");
 renderList();
+
+addEventListener("keyup", () => {
+  errormessage.innerHTML = "";
+  const task = { task: input.value.trim(), completed: false };
+  const { error } = schema.validate(task);
+  if (error) {
+    if (input.value.length < 3) {
+      errormessage.innerHTML = "Error - You must use over 3 characters";
+    } else if (input.value.length > 100) {
+      errormessage.innerHTML = "Error - Character Limit exceeded";
+    } else errormessage.innerHTML = "Error - Invalid character detected";
+  }
+
+  console.log("keypress", input.value);
+});
 
 // Add a task
 document.getElementById("add").addEventListener("click", function (e) {
   e.preventDefault();
 
+  const task = { task: input.value.trim(), completed: false };
+  const { error } = schema.validate(task);
+
+  if (error) {
+    alert(error.details[0].message);
+    return;
+  }
+
   if (input.value.trim() !== "") {
-    tasksArray.push({ task: input.value, completed: false });
+    tasksArray.push(task);
     localStorage.setItem("tasks", JSON.stringify(tasksArray));
     renderList();
     input.value = "";
@@ -71,6 +100,17 @@ function renderItem(task, index) {
   const saveButton = document.createElement("button");
   saveButton.textContent = "Save 🛟";
   saveButton.addEventListener("click", function () {
+    const updatedTask = {
+      task: newItem.innerText.trim(),
+      completed: task.completed,
+    };
+    const { error } = schema.validate(updatedTask);
+
+    if (error) {
+      alert(error.details[0].message);
+      return;
+    }
+
     newItem.contentEditable = false;
     newItem.style.backgroundColor = "";
     tasksArray[index].task = newItem.innerText;
